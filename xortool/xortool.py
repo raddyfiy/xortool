@@ -46,14 +46,13 @@ from operator import itemgetter
 import os
 import string
 import xortool
-from xortool.colors import *
+from colors import *
 
-from xortool.routine import *
-from xortool.args import parse_parameters, ArgError
-
+from routine import *
+from args import parse_parameters, ArgError
+__version__=0.98
 DIRNAME = 'xortool_out'  # here plaintexts will be placed
 PARAMETERS = dict()
-
 
 class AnalysisError(Exception):
     pass
@@ -62,7 +61,7 @@ class AnalysisError(Exception):
 def main():
     global PARAMETERS
     try:
-        PARAMETERS = parse_parameters(__doc__, xortool.__version__)
+        PARAMETERS = parse_parameters(__doc__,__version__)
         ciphertext = get_ciphertext()
         update_key_length(ciphertext)
 

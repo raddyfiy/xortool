@@ -3,8 +3,8 @@
 
 from docopt import docopt
 
-from xortool.routine import parse_char
-from xortool.charset import get_charset
+from routine import parse_char
+from charset import get_charset
 
 
 class ArgError(Exception):
