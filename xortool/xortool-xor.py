@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#! python2
 #-*- coding:utf-8 -*-
 
 """
@@ -9,6 +9,9 @@ options:
     -h  -  hex-encoded string (non-letterdigit chars are stripped)
     -f  -  read data from file (- for stdin)
     -n  -  no newline at the end
+    -o  -  outfile name
+
+
     --no-cycle / --nc  -  pad smaller strings with null bytes
 example: xor -s lol -h 414243 -f /etc/passwd
 
@@ -20,10 +23,8 @@ import sys
 import string
 import getopt
 
-
-DATA_OPTS = "s:r:h:f:"
+DATA_OPTS = "s:r:h:f:o:"
 HEXES = set("0123456789abcdefABCDEF")
-
 
 def main():
     nocycle = False
@@ -32,6 +33,9 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], "n" + DATA_OPTS, ["no-cycle", "nc"])
         datas = []
         for c, val in opts:
+            if c =="-o":
+                outfilename=val
+                continue
             if c in ("--no-cycle", "--nc"):
                 nocycle = True
             elif c == "-n":
@@ -48,9 +52,13 @@ def main():
         print(__doc__, file=sys.stderr)
         quit()
 
-    sys.stdout.write(xor(datas, nocycle=nocycle))
+    outfile=open(outfilename,'wb')
+
+    outfile.write(xor(datas, nocycle=nocycle))
     if not nonewline:
-        sys.stdout.write("\n")
+        outfile.write("\n")
+
+    outfile.close()
 
 
 def xor(args, nocycle=False):
@@ -84,7 +92,6 @@ def from_str(s):
     res += s[i:]
     return res
 
-
 def from_hex(s):
     res = ""
     for c in s:
@@ -94,12 +101,10 @@ def from_hex(s):
             raise ValueError("Bad splitters (alphanum)")
     return res.decode("hex")
 
-
 def from_file(s):
     if s == "-":
         return sys.stdin.read()
     return open(s, "rb").read()
-
 
 def arg_data(opt, s):
     if opt == "-s":

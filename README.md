@@ -1,4 +1,4 @@
-xortool.py
+xortool.py for windows
 ====================
 
 A tool to do some xor analysis:
@@ -6,6 +6,7 @@ A tool to do some xor analysis:
   - guess the key length (based on count of equal chars)
   - guess the key (base on knowledge of most frequent char)
 
+need python2
 Usage
 ---------------------
 
@@ -16,11 +17,11 @@ xortool
   - guess the key (base on knowledge of most frequent char)
 
 Usage:
-  xortool [-x] [-m MAX-LEN] [-f] [-t CHARSET] [FILE]
-  xortool [-x] [-l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
-  xortool [-x] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
-  xortool [-h | --help]
-  xortool --version
+  python xortool.py [-x] [-m MAX-LEN] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-x] [-l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-x] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-h | --help]
+  python xortool.py --version
 
 Options:
   -x --hex                          input is hex-encoded str
@@ -44,43 +45,42 @@ Notes:
       - *: printable chars
 
 Examples:
-  xortool file.bin
-  xortool -l 11 -c 20 file.bin
-  xortool -x -c ' ' file.hex
-  xortool -b -f -l 23 -t base64 message.enc
+  python xortool.py file.bin
+  python xortool.py -l 11 -c 20 file.bin
+  python xortool.py -x -c ' ' file.hex
+  python xortool.py -b -f -l 23 -t base64 message.enc
 ```
 
 Example 1
 ---------------------
 
-```bash
-# xor is xortool/xortool-xor
-tests $ xor -f /bin/ls -s "secret_key" > binary_xored
+```cmd
+D:\xortool> python xortool-xor.py -f ls -s "secret_key" -o binary_xored
 
-tests $ xortool binary_xored
+D:\xortool> python xortool.py binary_xored
 The most probable key lengths:
-   2:   5.0%
-   5:   8.7%
-   8:   4.9%
-  10:   15.4%
-  12:   4.8%
-  15:   8.5%
-  18:   4.8%
-  20:   15.1%
-  25:   8.4%
-  30:   14.9%
+   1:   9.6%
+   5:   15.2%
+  10:   21.5%
+  15:   9.4%
+  20:   13.4%
+  25:   6.1%
+  30:   9.0%
+  35:   4.2%
+  40:   6.5%
+  50:   5.0%
 Key-length can be 5*n
 Most possible char is needed to guess the key!
 
 # 00 is the most frequent byte in binaries
-tests $ xortool binary_xored -l 10 -c 00
+D:\xortool> python xortool.py binary_xored -l 10 -c 00
 ...
 1 possible key(s) of length 10:
 secret_key
 
 # decrypted ciphertexts are placed in ./xortool_out/Number_<key repr>
 # ( have no better idea )
-tests $ md5sum xortool_out/0_secret_key /bin/ls
+D:\xortool> md5sum xortool_out/0_secret_key /bin/ls
 29942e290876703169e1b614d0b4340a  xortool_out/0_secret_key
 29942e290876703169e1b614d0b4340a  /bin/ls
 ```
@@ -88,18 +88,18 @@ tests $ md5sum xortool_out/0_secret_key /bin/ls
 The most common use is to pass just the encrypted file and the most frequent character (usually 00 for binaries and 20 for text files) - length will be automatically chosen:
 
 ```bash
-tests $ xortool tool_xored -c 20
+D:\xortool> python xortool.py tool_xored -c 20
 The most probable key lengths:
-   2:   5.6%
-   5:   7.8%
-   8:   6.0%
-  10:   11.7%
-  12:   5.6%
-  15:   7.6%
-  20:   19.8%
-  25:   7.8%
-  28:   5.7%
-  30:   11.4%
+   2:   10.4%
+   5:   13.0%
+   8:   8.8%
+  10:   15.7%
+  12:   6.9%
+  15:   8.1%
+  20:   16.9%
+  25:   5.4%
+  30:   6.6%
+  40:   8.1%
 Key-length can be 5*n
 1 possible key(s) of length 20:
 an0ther s3cret \xdd key
@@ -108,18 +108,18 @@ an0ther s3cret \xdd key
 Here, the key is longer then default 32 limit:
 
 ```bash
-tests $ xortool ls_xored -c 00 -m 64
+D:\xortool> python xortool.py ls_xored -c 00 -m 64
 The most probable key lengths:
-   3:   3.3%
-   6:   3.3%
-   9:   3.3%
-  11:   7.0%
-  22:   6.9%
-  24:   3.3%
-  27:   3.2%
-  33:   18.4%
-  44:   6.8%
-  55:   6.7%
+   1:   9.3%
+   3:   11.2%
+   6:   9.9%
+   9:   8.6%
+  11:   16.5%
+  15:   6.4%
+  18:   5.6%
+  22:   10.0%
+  33:   17.9%
+  44:   4.8%
 Key-length can be 3*n
 1 possible key(s) of length 33:
 really long s3cr3t k3y... PADDING
@@ -137,7 +137,7 @@ Example 2
 We are given a message in encoded in Base64 and XORed with an unknown key.
 
 ```bash
-# xortool message.enc 
+D:\xortool> python xortool.py message.enc 
 The most probable key lengths:
    2:   12.3%
    4:   13.8%
@@ -156,7 +156,7 @@ Most possible char is needed to guess the key!
 We can now test the key lengths while filtering the outputs so that it only keeps the plaintexts holding the character set of Base64. After trying a few lengths, we come to the right one, which gives only 1 plaintext with a percentage of valid characters above the default threshold of 95%.
 
 ```bash
-$ xortool message.enc -b -f -l 23 -t base64
+D:\xortool> python xortool.py message.enc -b -f -l 23 -t base64
 256 possible key(s) of length 23:
 \x01=\x121#"0\x17\x13\t\x7f ,&/\x12s\x114u\x170#
 \x00<\x130"#1\x16\x12\x08~!-\'.\x13r\x105t\x161"
