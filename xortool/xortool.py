@@ -7,11 +7,11 @@ xortool
   - guess the key (base on knowledge of most frequent char)
 
 Usage:
-  xortool [-x] [-m MAX-LEN] [-f] [-t CHARSET] [FILE]
-  xortool [-x] [-l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
-  xortool [-x] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
-  xortool [-h | --help]
-  xortool --version
+  python xortool.py [-x] [-m MAX-LEN] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-x] [-l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-x] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [-f] [-t CHARSET] [FILE]
+  python xortool.py [-h | --help]
+  python xortool.py --version
 
 Options:
   -x --hex                          input is hex-encoded str
