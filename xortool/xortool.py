@@ -50,7 +50,7 @@ from colors import *
 
 from routine import *
 from args import parse_parameters, ArgError
-__version__=0.98
+__version__="0.98w"
 DIRNAME = 'xortool_out'  # here plaintexts will be placed
 PARAMETERS = dict()
 
