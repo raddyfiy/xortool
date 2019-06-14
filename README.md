@@ -7,6 +7,7 @@ A tool to do some xor analysis:
   - guess the key (base on knowledge of most frequent char)
 
 need python2
+
 note: some commands are different from linux version 
 -----------
 Usage

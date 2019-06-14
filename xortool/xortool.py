@@ -35,10 +35,10 @@ Notes:
       - *: printable chars
 
 Examples:
-  xortool file.bin
-  xortool -l 11 -c 20 file.bin
-  xortool -x -c ' ' file.hex
-  xortool -b -f -l 23 -t base64 message.enc
+  python xortool.py file.bin
+  python xortool.py -l 11 -c 20 file.bin
+  python xortool.py -x -c ' ' file.hex
+  python xortool.py -b -f -l 23 -t base64 message.enc
 """
 
 from operator import itemgetter
