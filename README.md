@@ -7,8 +7,10 @@ A tool to do some xor analysis:
   - guess the key (base on knowledge of most frequent char)
 
 need python2
+note: some commands are different from linux version 
+-----------
 Usage
----------------------
+
 
 ```
 xortool
@@ -55,34 +57,42 @@ Example 1
 ---------------------
 
 ```cmd
-D:\xortool> python xortool-xor.py -f ls -s "secret_key" -o binary_xored
+D:\xortool> python xortool-xor.py -f ./text/cmd.exe -s "secret_key" -n -o binary_xored_cmd
 
-D:\xortool> python xortool.py binary_xored
+*This is different from linux version,do not use > to save file*
+*To remain file unchanged, you'd better add -n. Most scenes need -n*
+
+
+D:\xortool> python xortool.py binary_xored_cmd
 The most probable key lengths:
-   1:   9.6%
+   1:   9.3%
    5:   15.2%
-  10:   21.5%
+  10:   21.6%
   15:   9.4%
-  20:   13.4%
+  20:   13.5%
   25:   6.1%
-  30:   9.0%
+  30:   9.1%
   35:   4.2%
-  40:   6.5%
+  40:   6.6%
   50:   5.0%
 Key-length can be 5*n
 Most possible char is needed to guess the key!
 
 # 00 is the most frequent byte in binaries
-D:\xortool> python xortool.py binary_xored -l 10 -c 00
+D:\xortool> python xortool.py binary_xored_cmd -l 10 -c 00
 ...
 1 possible key(s) of length 10:
 secret_key
 
 # decrypted ciphertexts are placed in ./xortool_out/Number_<key repr>
 # ( have no better idea )
-D:\xortool> md5sum xortool_out/0_secret_key /bin/ls
-29942e290876703169e1b614d0b4340a  xortool_out/0_secret_key
-29942e290876703169e1b614d0b4340a  /bin/ls
+D:\xortool >certutil -hashfile text/cmd.exe MD5
+MD5 哈希(文件 text/cmd.exe):
+a6 17 7d 08 07 59 cf 4a 03 ef 83 7a 38 f6 24 01
+
+D:\xortool >certutil -hashfile xortool_out/0.out MD5
+MD5 哈希(文件 xortool_out/0.out):
+a6 17 7d 08 07 59 cf 4a 03 ef 83 7a 38 f6 24 01
 ```
 
 The most common use is to pass just the encrypted file and the most frequent character (usually 00 for binaries and 20 for text files) - length will be automatically chosen:
@@ -174,5 +184,7 @@ Information
 ---------------------
 
 Author: hellman ( hellman1908@gmail.com )
+
+windows version: (fiy.sheng11@gmail.com)
 
 License: MIT License (opensource.org/licenses/MIT)

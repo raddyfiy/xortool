@@ -8,12 +8,12 @@ options:
     -r  -  raw string
     -h  -  hex-encoded string (non-letterdigit chars are stripped)
     -f  -  read data from file (- for stdin)
-    -n  -  no newline at the end
-    -o  -  outfile name
+    -n  -  no newline at the end(you'd better add -n to keep file original)
+    -o  -  outfile name(This is different from linux version,do not use > to save file)
 
 
     --no-cycle / --nc  -  pad smaller strings with null bytes
-example: xor -s lol -h 414243 -f /etc/passwd
+example: python xortool-xor.py -f ./text/cmd.exe -s "secret_key" -n -o binary_xored_cmd
 
 author: hellman ( hellman1908@gmail.com )
 """
