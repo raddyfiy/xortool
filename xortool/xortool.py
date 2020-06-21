@@ -283,7 +283,7 @@ def guess_keys(text, most_char):
         max_count = max(chars_count.values())
         for char in chars_count:
             if chars_count[char] >= max_count:
-                key_possible_bytes[offset].append(chr(ord(char) ^ most_char))
+                key_possible_bytes[offset].append(chr(char ^ most_char))
 
     return all_keys(key_possible_bytes)
 
@@ -375,7 +375,7 @@ def produce_plaintexts(ciphertext, keys, key_char_used):
         if not PARAMETERS["filter_output"] or \
             (PARAMETERS["filter_output"] and perc > threshold_valid):
             f = open(file_name, "wb")
-            f.write(dexored)
+            f.write(dexored.encode())
             f.close()
     key_mapping.close()
     perc_mapping.close()
